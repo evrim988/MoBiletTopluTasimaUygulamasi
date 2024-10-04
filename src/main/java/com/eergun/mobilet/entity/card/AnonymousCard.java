@@ -1,4 +1,4 @@
-package com.eergun.mobilet.entity;
+package com.eergun.mobilet.entity.card;
 
-public class AnonymousCard {
+public class AnonymousCard extends CardWithBalance {
 }

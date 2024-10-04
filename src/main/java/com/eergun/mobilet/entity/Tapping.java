@@ -11,12 +11,11 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Data
 @Entity
-@Table(name = "tblpayment")
-public class Payment extends BaseEntity{
+@Table(name = "tbltapping")
+public class Tapping extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String cardSerialNumber;
-	Integer amount;
 	LocalDateTime transactionDate;
 }

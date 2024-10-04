@@ -1,4 +1,4 @@
 package com.eergun.mobilet.entity;
 
-public class Vehicle {
+public abstract class Vehicle extends BaseEntity{
 }

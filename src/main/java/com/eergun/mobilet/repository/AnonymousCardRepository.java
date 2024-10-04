@@ -1,4 +1,7 @@
 package com.eergun.mobilet.repository;
 
-public interface AnonymousCardRepository {
+import com.eergun.mobilet.entity.card.AnonymousCard;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AnonymousCardRepository extends JpaRepository<AnonymousCard, Long> {
 }

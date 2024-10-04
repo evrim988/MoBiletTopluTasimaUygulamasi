@@ -1,4 +1,7 @@
 package com.eergun.mobilet.entity.card;
 
-public class CardWithBalance {
+import lombok.Builder;
+
+public abstract class CardWithBalance extends Card{
+	double balance;
 }

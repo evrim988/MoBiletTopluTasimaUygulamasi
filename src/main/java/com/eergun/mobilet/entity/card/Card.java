@@ -1,5 +1,6 @@
-package com.eergun.mobilet.entity;
+package com.eergun.mobilet.entity.card;
 
+import com.eergun.mobilet.entity.BaseEntity;
 import com.eergun.mobilet.utility.enums.CardType;
 
 import jakarta.persistence.*;
@@ -10,14 +11,13 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Data
-@Entity
-@Table(name = "tblcard")
-public class Card extends BaseEntity {
+@MappedSuperclass
+public abstract class Card extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String serialNumber;
-	Integer balance;
-	Long cardUserId;
 	CardType cardType;
+	
+	// public abstract void pay();
 }
