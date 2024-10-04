@@ -6,6 +6,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -18,4 +20,5 @@ public class Tapping extends BaseEntity{
 	Long id;
 	String cardSerialNumber;
 	LocalDateTime transactionDate;
+	
 }

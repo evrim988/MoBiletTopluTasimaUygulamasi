@@ -1,13 +1,10 @@
 package com.eergun.mobilet.entity.card;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -15,5 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "tblanonymouscard")
 public class AnonymousCard extends CardWithBalance {
+
+	String name;
 
 }
