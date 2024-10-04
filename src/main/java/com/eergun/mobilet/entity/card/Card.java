@@ -7,17 +7,24 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@Table(name = "tblcard")
 public abstract class Card extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
+	@Column(name = "")
 	String serialNumber;
-	CardType cardType;
+	@Enumerated(EnumType.STRING)
+	@Builder.Default
+	CardType cardType = CardType.DEFAULT;
+	
 	
 	// public abstract void pay();
 }
