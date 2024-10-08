@@ -1,5 +1,6 @@
 package com.eergun.mobilet.controller;
 
+import com.eergun.mobilet.Exception.BakiyeYetersizException;
 import com.eergun.mobilet.entity.card.AnonymousCard;
 import com.eergun.mobilet.entity.card.Card;
 import com.eergun.mobilet.service.CardService;
@@ -7,8 +8,6 @@ import com.eergun.mobilet.utility.enums.VehicleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.service.annotation.GetExchange;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class CardController {
 
 //    @PostMapping("/odeme")
 //    @ResponseBody
-//    public String taptheAnonymousCard(String serialNumber, VehicleType vehicleType){
+//    public String tapTheCard(String serialNumber, VehicleType vehicleType){
 //        Card card =  cardService.tapTheAnonymousCard(serialNumber,vehicleType);
 //        cardService.save(card);
 //        System.out.println("Ödeme gerçekleştirildi. Kalan bakiye: "+card.getRemainingBalance());
@@ -57,9 +56,15 @@ public class CardController {
 
     @PostMapping("/odeme")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> taptheAnonymousCard(String serialNumber, VehicleType vehicleType) {
+    public ResponseEntity<Map<String, Object>> tapTheCard(String serialNumber, VehicleType vehicleType) {
 
-        Card card = cardService.tapTheAnonymousCard(serialNumber, vehicleType);
+        Card card;
+        try {
+            card = cardService.tapTheAnonymousCard(serialNumber, vehicleType);
+        } catch (BakiyeYetersizException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(null);
+        }
         cardService.save(card);
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("tr", "TR"));
