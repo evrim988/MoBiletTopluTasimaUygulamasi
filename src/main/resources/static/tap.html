@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mobilet Para Yükle</title>
+</head>
+<body>
+<form action="/card/odeme" method="post">
+    <label for="serialNumber">Kart Seri NO</label>
+    <br>
+    <input type="text" name="serialNumber" id="serialNumber"> <br><br>
+
+    <label for="vehicleType">Araç tipi</label>
+    <br>
+    <select name="vehicleType" id="vehicleType">
+        <!-- Enum değerlerini option olarak ekleyin -->
+        <option value="BUS">Otobüs</option>
+        <option value="METRO">Metro</option>
+        <option value="TRAM">Tramvay</option>
+        <option value="FERRY">Vapur</option>
+        <option value="FUNICULAR">Füniküler</option>
+    </select> <br><br>
+
+    <button type="submit">Giriş Yap</button>
+</form>
+</body>
+</html>

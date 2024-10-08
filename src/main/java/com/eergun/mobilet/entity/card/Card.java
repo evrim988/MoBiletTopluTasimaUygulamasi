@@ -3,9 +3,11 @@ package com.eergun.mobilet.entity.card;
 import com.eergun.mobilet.entity.BaseEntity;
 import com.eergun.mobilet.utility.enums.CardType;
 
+import com.eergun.mobilet.utility.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.type.EntityType;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -13,17 +15,21 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "entityType")
 @Entity
 @Table(name = "tblcard")
 public abstract class Card extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	@Column(name = "")
+	@Column
 	String serialNumber;
-	@Enumerated(EnumType.STRING)
-	@Builder.Default
-	CardType cardType = CardType.DEFAULT;
+
+	public abstract void tapTheCard(VehicleType vehicleType);
+	public abstract Double getRemainingBalance();
+
+
+
 	
 	
 	// public abstract void pay();

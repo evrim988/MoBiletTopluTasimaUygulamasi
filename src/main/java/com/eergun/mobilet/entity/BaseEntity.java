@@ -14,7 +14,10 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class BaseEntity {
 	State state;
-	LocalDateTime createAt;
-	LocalDateTime updateAt;
+	@Builder.Default
+	LocalDateTime createAt = LocalDateTime.now();
+	@Builder.Default
+	LocalDateTime updateAt = LocalDateTime.now();
+
 	LocalDateTime deleteAt;
 }

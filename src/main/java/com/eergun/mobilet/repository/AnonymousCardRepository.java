@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface AnonymousCardRepository extends JpaRepository<AnonymousCard, Long> {
 	
 	Optional<AnonymousCard> findOptionalBySerialNumber(String serialNumber);
-	
+
+	Boolean existsBySerialNumber(String serialNumber);
 }
