@@ -20,21 +20,4 @@ public class AnonymousCardService{
 	public List<AnonymousCard> findAll() {
 		return anonymousCardRepository.findAll();
 	}
-
-
-
-
-	public Card tapTheAnonymousCard(String serialNo, VehicleType vehicleType) {
-		if(anonymousCardRepository.existsBySerialNumber(serialNo)){
-			AnonymousCard anonymousCard = (AnonymousCard) cardService.findOptionalBySerialNumber(serialNo);
-			anonymousCard.tapTheCard(vehicleType);
-			return anonymousCard;
-		}
-		return null;
-	}
-
-
-	public void save(AnonymousCard card) {
-		anonymousCardRepository.save(card);
-	}
 }
