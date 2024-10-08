@@ -15,5 +15,8 @@ public class CardUserService {
 	public List<CardUser> findAllByNameContaining(String name){
 		return cardUserRepository.findAllByNameContainingIgnoreCase(name);
 	}
-	
+
+	public void save(CardUser cardUser) {
+		cardUserRepository.save(cardUser);
+	}
 }

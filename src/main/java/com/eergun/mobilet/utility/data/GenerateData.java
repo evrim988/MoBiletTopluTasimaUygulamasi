@@ -33,7 +33,7 @@ public class GenerateData implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 //		createCard();
 //		createCardUser();
-		createVehicle();
+//		createVehicle();
 		
 	}
 	

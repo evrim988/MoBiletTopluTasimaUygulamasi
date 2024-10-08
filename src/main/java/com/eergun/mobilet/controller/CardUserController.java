@@ -2,12 +2,10 @@ package com.eergun.mobilet.controller;
 
 import com.eergun.mobilet.entity.CardUser;
 import com.eergun.mobilet.service.CardUserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +18,11 @@ public class CardUserController {
 	@GetMapping("/users-{name}")
 	public List<CardUser> getUsers(@PathVariable String name) {
 		return cardUserService.findAllByNameContaining(name);
+	}
+
+	@PostMapping("/add")
+	public String addUser(@Valid @RequestBody CardUser cardUser) {
+		cardUserService.save(cardUser);
+		return "Kullanıcı başarıyla kaydedildi.";
 	}
 }
