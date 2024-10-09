@@ -38,13 +38,13 @@ public class GenerateData implements ApplicationRunner {
 	}
 	
 	private void createCardUser() {
-		CardUser cardUser = CardUser.builder().name("Emine").lastName("Karabolat").identityNo("1234").password("12345").build();
-		CardUser cardUser1 = CardUser.builder().name("Emirhan").lastName("Ergün").identityNo("1235").password(
+		CardUser cardUser = CardUser.builder().name("Emine").lastName("Karabolat").identityNo("1234").password("12345").email("emine@gmail.com").build();
+		CardUser cardUser1 = CardUser.builder().name("Emirhan").lastName("Ergün").identityNo("1235").email("asd123@gmail.com").password(
 				"12345").adress("Çorlu").build();
-		CardUser cardUser2 = CardUser.builder().name("Evrim").lastName("Çalışkan").identityNo("1236").password(
+		CardUser cardUser2 = CardUser.builder().name("Evrim").lastName("Çalışkan").identityNo("1236").email("evrim@gmail.com").password(
 				"12345").build();
 		CardUser cardUser3 = CardUser.builder().name("Murat").lastName("Saçak").identityNo("1237").password(
-				"12345").build();
+				"12345").email("izmit_41@hotmail.com").build();
 		
 		cardUserRepository.saveAll(List.of(cardUser, cardUser1, cardUser2, cardUser3));
 	}
