@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "tbltapping")
+
 public class Tapping extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

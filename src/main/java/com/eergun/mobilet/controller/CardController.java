@@ -1,6 +1,7 @@
 package com.eergun.mobilet.controller;
 
 import com.eergun.mobilet.Exception.BakiyeYetersizException;
+import static com.eergun.mobilet.constants.RestApis.*;
 import com.eergun.mobilet.entity.card.AnonymousCard;
 import com.eergun.mobilet.entity.card.Card;
 import com.eergun.mobilet.service.CardService;
@@ -17,33 +18,22 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/card")
+@RequestMapping(CARD)
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping("/get-all")
+    @GetMapping(GETALL)
     public List<Card> getAnonymousCards() {
         return cardService.findAll();
     }
 
 
-    @PostMapping("/")
+    @PostMapping(FINDBYCARDSERIALNUMBER)
     public Card getCardByUser(String serialNumber) {
         return cardService.findOptionalBySerialNumber(serialNumber);
     }
 
-    @PostMapping("/money")
-    public Card makeDeposit(String serialNumber, Double amount) {
-        Card card = getCardByUser(serialNumber);
-        System.out.println(card);
-        if (card != null) {
-            if (card instanceof AnonymousCard) {
-                ((AnonymousCard) card).setBalance(((AnonymousCard) card).getBalance() + amount);
-                cardService.save(card);
-            }
-        }
-        return card;
-    }
+
 
 //    @PostMapping("/odeme")
 //    @ResponseBody
@@ -54,7 +44,7 @@ public class CardController {
 //        return "redirect:/card/success";
 //    }
 
-    @PostMapping("/odeme")
+    @PostMapping(ODEME)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> tapTheCard(String serialNumber, VehicleType vehicleType) {
 
@@ -78,10 +68,10 @@ public class CardController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/odeme")
+    /*@GetMapping("/odeme")
     public String successMessage(Card card) {
         return "Ödeme gerçekleştirildi. Kalan bakiye:" + card.getRemainingBalance();
-    }
+    }*/
 
 
 }
