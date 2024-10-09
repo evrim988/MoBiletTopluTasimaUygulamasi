@@ -1,6 +1,6 @@
 package com.eergun.mobilet.service;
 
-import com.eergun.mobilet.Exception.CardNotFoundException;
+import com.eergun.mobilet.exception.CardNotFoundException;
 import com.eergun.mobilet.dto.request.AddMoneyRequestDto;
 import com.eergun.mobilet.entity.card.CardWithBalance;
 import com.eergun.mobilet.repository.CardWithBalanceRepository;
@@ -21,6 +21,7 @@ public class CardWithBalanceService {
             CardWithBalance cardWithBalance = optionalBySerialNumber.get();
             cardWithBalance.setBalance(cardWithBalance.getBalance() + addMoneyRequestDto.getAmount());
             cardWithBalanceRepository.save(cardWithBalance);
+            return cardWithBalance;
         }
         throw new CardNotFoundException();
     }

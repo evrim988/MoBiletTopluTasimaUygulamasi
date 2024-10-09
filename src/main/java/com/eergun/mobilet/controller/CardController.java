@@ -1,11 +1,16 @@
 package com.eergun.mobilet.controller;
 
-import com.eergun.mobilet.Exception.BakiyeYetersizException;
+import com.eergun.mobilet.dto.response.BaseResponseDto;
+import com.eergun.mobilet.exception.BakiyeYetersizException;
 import static com.eergun.mobilet.constants.RestApis.*;
-import com.eergun.mobilet.entity.card.AnonymousCard;
+
 import com.eergun.mobilet.entity.card.Card;
+import com.eergun.mobilet.exception.CardNotFoundException;
 import com.eergun.mobilet.service.CardService;
 import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.view.VwCard;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,55 +28,30 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping(GETALL)
-    public List<Card> getAnonymousCards() {
-        return cardService.findAll();
+    public ResponseEntity<BaseResponseDto<List<String>>> getAllCards() {
+        List<String> serialNumberList = cardService.findAllSerialNumbers();
+        try{
+            return ResponseEntity.ok(BaseResponseDto.<List<String>>builder()
+                                                    .code(200)
+                                                    .data(serialNumberList)
+                                                    .message("card view")
+                                                    .success(true)
+                                                    .build());
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
 
     @PostMapping(FINDBYCARDSERIALNUMBER)
-    public Card getCardByUser(String serialNumber) {
-        return cardService.findOptionalBySerialNumber(serialNumber);
-    }
-
-
-
-//    @PostMapping("/odeme")
-//    @ResponseBody
-//    public String tapTheCard(String serialNumber, VehicleType vehicleType){
-//        Card card =  cardService.tapTheAnonymousCard(serialNumber,vehicleType);
-//        cardService.save(card);
-//        System.out.println("Ödeme gerçekleştirildi. Kalan bakiye: "+card.getRemainingBalance());
-//        return "redirect:/card/success";
-//    }
-
-    @PostMapping(ODEME)
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> tapTheCard(String serialNumber, VehicleType vehicleType) {
-
-        Card card;
-        try {
-            card = cardService.tapTheAnonymousCard(serialNumber, vehicleType);
-        } catch (BakiyeYetersizException e) {
-            System.out.println(e.getMessage());
+    public ResponseEntity<Boolean> existsBySerialNumber(@Size(min = 36, max = 36) String serialNumber) {
+        try{
+            return ResponseEntity.ok(cardService.existsBySerialNumber(serialNumber));
+        } catch (CardNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }
-        cardService.save(card);
-
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("tr", "TR"));
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Ödeme gerçekleştirildi.");
-        response.put("remainingBalance", currencyFormat.format(card.getRemainingBalance()));
-        response.put("vehicleType", vehicleType.toString());
-
-
-        return ResponseEntity.ok(response);
     }
-
-    /*@GetMapping("/odeme")
-    public String successMessage(Card card) {
-        return "Ödeme gerçekleştirildi. Kalan bakiye:" + card.getRemainingBalance();
-    }*/
-
 
 }

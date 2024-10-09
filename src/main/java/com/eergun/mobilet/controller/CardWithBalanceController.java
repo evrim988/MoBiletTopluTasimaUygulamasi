@@ -1,6 +1,6 @@
 package com.eergun.mobilet.controller;
 
-import com.eergun.mobilet.Exception.CardNotFoundException;
+import com.eergun.mobilet.exception.CardNotFoundException;
 import static com.eergun.mobilet.constants.RestApis.*;
 import com.eergun.mobilet.dto.request.AddMoneyRequestDto;
 import com.eergun.mobilet.entity.card.AnonymousCard;

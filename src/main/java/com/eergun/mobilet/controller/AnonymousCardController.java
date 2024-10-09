@@ -14,26 +14,5 @@ import java.util.List;
 public class AnonymousCardController {
 	
 	private final AnonymousCardService anonymousCardService;
-
-
-
-	@GetMapping(GETALL)
-	public List<AnonymousCard> getAnonymousCards(){
-		return anonymousCardService.findAll();
-	}
-
-
-/*
-
-	@PostMapping(ADDMONEY)
-	public void addMoney(AnonymousCard anonymousCard, Integer money){
-		anonymousCard.setBalance(anonymousCard.getBalance()+money);
-	}
-
-*/
-
-
-
-
-
+	
 }

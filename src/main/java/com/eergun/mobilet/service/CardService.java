@@ -1,9 +1,9 @@
 package com.eergun.mobilet.service;
 
-import com.eergun.mobilet.Exception.UserNotFoundException;
 import com.eergun.mobilet.entity.card.Card;
 import com.eergun.mobilet.repository.CardRepository;
 import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.view.VwCard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,38 +14,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CardService {
     private final CardRepository cardRepository;
+    
 
-    public Card findOptionalBySerialNumber(String serialNumber){
-        if(cardRepository.findOptionalBySerialNumber(serialNumber).isPresent()){
-            return cardRepository.findOptionalBySerialNumber(serialNumber).get();
-        }
-        throw new UserNotFoundException();
+    public List<String> findAllSerialNumbers(){
+        return cardRepository.findAllAsSerialNumber();
     }
 
-    public List<Card> findAll(){
-        return cardRepository.findAll();
-    }
-
-
-
+    
     public void save(Card card){
         cardRepository.save(card);
     }
-
-    public Card tapTheAnonymousCard(String serialNo, VehicleType vehicleType) {
-        Optional<Card> cardOptional = cardRepository.findOptionalBySerialNumber(serialNo);
-        if(cardOptional.isPresent()){
-            Card card = cardOptional.get();
-            card.tapTheCard(vehicleType);
-            return card;
-        }
-        return null;
+    
+    
+    public Boolean existsBySerialNumber(String serialNumber) {
+        return cardRepository.existsCardBySerialNumber(serialNumber);
     }
-
-
-
-
-
-
-
+    
+    public Optional<Card> findBySerialNumber(String serialNumber) {
+        return cardRepository.findOptionalBySerialNumber(serialNumber);
+    }
 }

@@ -1,14 +1,20 @@
 package com.eergun.mobilet.controller;
 
 import static com.eergun.mobilet.constants.RestApis.*;
+
+import com.eergun.mobilet.dto.response.BaseResponseDto;
 import com.eergun.mobilet.entity.CardUser;
+import com.eergun.mobilet.entity.Person;
 import com.eergun.mobilet.service.CardUserService;
+import com.eergun.mobilet.view.VwCardUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping(CARDUSER)
 @RestController
@@ -18,8 +24,22 @@ public class CardUserController {
 
 
 	@PostMapping(ADDUSER)
-	public String addUser(@Valid @RequestBody CardUser cardUser) {
-		cardUserService.save(cardUser);
-		return "Kullanıcı başarıyla kaydedildi.";
+	public ResponseEntity<BaseResponseDto<VwCardUser>> addUser(@Valid @RequestBody Person person) {
+		CardUser cardUser = (CardUser) person;
+		try {
+			VwCardUser vwCardUser = cardUserService.save(cardUser);
+			return ResponseEntity.ok(BaseResponseDto.<VwCardUser>builder()
+					                         .message("user registered")
+					                         .code(200)
+					                         .data(vwCardUser)
+					                         .success(true).build());
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body(BaseResponseDto.<VwCardUser>builder()
+					                                        .success(false)
+					                                        .code(400)
+					                                        .message("could not register user").build());
+		}
 	}
 }

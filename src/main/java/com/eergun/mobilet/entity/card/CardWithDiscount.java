@@ -1,11 +1,10 @@
 package com.eergun.mobilet.entity.card;
 
 
+import com.eergun.mobilet.exception.BakiyeYetersizException;
+import com.eergun.mobilet.utility.enums.CardType;
 import com.eergun.mobilet.utility.enums.VehicleType;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -21,15 +20,16 @@ import lombok.experimental.SuperBuilder;
 public class CardWithDiscount extends CardWithBalance {
 	Double discount;
 	Long cardUserId;
-
-
+	@Enumerated(EnumType.STRING)
+	CardType cardType;
+	
 	@Override
-	public void tapTheCard(VehicleType vehicleType) {
-
+	public void tapTheCard(VehicleType vehicleType){
+		double newBalance = this.getBalance()-vehicleType.getPrice() * this.getCardType().getDiscountRate();
+		if(newBalance < 0){
+			throw new BakiyeYetersizException();
+		}
+		this.setBalance(newBalance);
 	}
-
-	@Override
-	public Double getRemainingBalance() {
-		return this.getBalance();
-	}
+	
 }

@@ -12,7 +12,7 @@ public class CardSubscription extends Card{
     }
 
     @Override
-    public Double getRemainingBalance() {
-        return 0.0;
+    public String getRemainingUsageMessage() {
+        return "Remaining Tap: " + remainingTap + " taps";
     }
 }

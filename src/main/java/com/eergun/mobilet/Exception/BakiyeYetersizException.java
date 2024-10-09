@@ -1,4 +1,4 @@
-package com.eergun.mobilet.Exception;
+package com.eergun.mobilet.exception;
 
 public class BakiyeYetersizException extends RuntimeException{
     public BakiyeYetersizException(){

@@ -18,5 +18,7 @@ public class RestApis {
     public static final String FINDBYCARDSERIALNUMBER = "/find-by-card-serial-number";
     public static final String ODEME = "/odeme";
     public static final String ADDUSER = "/adduser";
+    
+    public static final String TAPPING = "/tapping";
 
 }

@@ -1,5 +1,8 @@
 package com.eergun.mobilet.entity.card;
 
+import com.eergun.mobilet.exception.BakiyeYetersizException;
+import com.eergun.mobilet.utility.enums.CardType;
+import com.eergun.mobilet.utility.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,10 +18,9 @@ import org.springframework.stereotype.Component;
 @Entity
 public abstract class CardWithBalance extends Card{
 	double balance;
-
-	public void makeDeposit(double amount) {
-		balance += amount;
+	
+	@Override
+	public String getRemainingUsageMessage() {
+		return "Kalan bakiye: " + balance + "₺";
 	}
-
-
 }

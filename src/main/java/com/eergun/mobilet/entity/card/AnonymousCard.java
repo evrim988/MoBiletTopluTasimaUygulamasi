@@ -1,6 +1,6 @@
 package com.eergun.mobilet.entity.card;
 
-import com.eergun.mobilet.Exception.BakiyeYetersizException;
+import com.eergun.mobilet.exception.BakiyeYetersizException;
 import com.eergun.mobilet.utility.enums.CardType;
 import com.eergun.mobilet.utility.enums.VehicleType;
 import jakarta.persistence.*;
@@ -29,18 +29,18 @@ public class AnonymousCard extends CardWithBalance {
 				", serialNumber='" + serialNumber + '\'' +
 				'}';
 	}
-
-
+	
 	@Override
-	public void tapTheCard(VehicleType vehicleType) {
-		if(this.getBalance()<vehicleType.getPrice()){
+	public void tapTheCard(VehicleType vehicleType){
+		double newBalance = this.getBalance()-vehicleType.getPrice() * CardType.DEFAULT.getDiscountRate();
+		if(newBalance < 0){
 			throw new BakiyeYetersizException();
 		}
-		this.setBalance(this.getBalance()-vehicleType.getPrice()* CardType.DEFAULT.getDiscountRate());
+		this.setBalance(newBalance);
 	}
-
-	@Override
-	public Double getRemainingBalance() {
-		return this.getBalance();
+	
+	public void makeDeposit(double amount) {
+		balance += amount;
 	}
+	
 }
