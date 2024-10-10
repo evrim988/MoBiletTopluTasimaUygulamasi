@@ -31,22 +31,24 @@ public class GenerateData implements ApplicationRunner {
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		//createCard();
-		//createCardUser();
-		//createVehicle();
-		
+//		createCard();
+//		createCardUser();
+//		createVehicle();
+
 	}
 	
 	private void createCardUser() {
-		CardUser cardUser = CardUser.builder().name("Emine").lastName("Karabolat").identityNo("1234").password("12345").email("emine@gmail.com").build();
-		CardUser cardUser1 = CardUser.builder().name("Emirhan").lastName("Ergün").identityNo("1235").email("asd123@gmail.com").password(
-				"12345").adress("Çorlu").build();
-		CardUser cardUser2 = CardUser.builder().name("Evrim").lastName("Çalışkan").identityNo("1236").email("evrim@gmail.com").password(
-				"12345").build();
-		CardUser cardUser3 = CardUser.builder().name("Murat").lastName("Saçak").identityNo("1237").password(
-				"12345").email("izmit_41@hotmail.com").build();
+		CardUser cardUser = CardUser.builder().name("Emine").lastName("Karabolat").identityNo("12345678910").password("12345e").email("emine@gmail.com").build();
+		CardUser cardUser1 = CardUser.builder().name("Emirhan").lastName("Ergün").identityNo("12354678910").email("asd123@gmail.com").password(
+				"12345e").adress("Çorlu").build();
+		CardUser cardUser2 = CardUser.builder().name("Evrim").lastName("Çalışkan").identityNo("12364578910").email("evrim@gmail.com").password(
+				"12345C").build();
+		CardUser cardUser3 = CardUser.builder().name("Murat").lastName("Saçak").identityNo("12374568910").password(
+				"12345m").email("izmit_41@hotmail.com").build();
 		
-		cardUserRepository.saveAll(List.of(cardUser, cardUser1, cardUser2, cardUser3));
+		CardUser cardUser4 = CardUser.builder().name("Mustafa").lastName("Sarı").identityNo("12374568911").password(
+				"12345mm").email("izmit@hotmail.com").build();
+		cardUserRepository.saveAll(List.of(cardUser, cardUser1, cardUser2, cardUser3, cardUser4));
 	}
 	
 	private void createCard() {

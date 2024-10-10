@@ -1,13 +1,14 @@
 package com.eergun.mobilet.service;
 
+import com.eergun.mobilet.dto.request.CardUserSaveRequestDto;
 import com.eergun.mobilet.entity.CardUser;
+import com.eergun.mobilet.mapper.CardUserMapper;
 import com.eergun.mobilet.repository.CardUserRepository;
 import com.eergun.mobilet.view.VwCardUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,8 @@ public class CardUserService{
 		return cardUserRepository.findAllByNameContainingIgnoreCase(name);
 	}
 
-	public VwCardUser save(CardUser cardUser) {
+	public VwCardUser save(CardUserSaveRequestDto dto) {
+		CardUser cardUser = CardUserMapper.mapToCardUser(dto);
 		cardUserRepository.save(cardUser);
 		return VwCardUser.builder()
 				                           .phone(cardUser.getPhone())

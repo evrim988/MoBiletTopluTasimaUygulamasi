@@ -15,9 +15,9 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseEntity {
 	State state;
 	@Builder.Default
-	LocalDateTime createAt = LocalDateTime.now();
+	Long createAt = System.currentTimeMillis();
 	@Builder.Default
-	LocalDateTime updateAt = LocalDateTime.now();
+	Long updateAt = System.currentTimeMillis();
 
-	LocalDateTime deleteAt;
+	Long deleteAt;
 }

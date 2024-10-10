@@ -2,6 +2,7 @@ package com.eergun.mobilet.controller;
 
 import static com.eergun.mobilet.constants.RestApis.*;
 
+import com.eergun.mobilet.dto.request.CardUserSaveRequestDto;
 import com.eergun.mobilet.dto.response.BaseResponseDto;
 import com.eergun.mobilet.entity.CardUser;
 import com.eergun.mobilet.entity.Person;
@@ -22,12 +23,10 @@ import java.util.Optional;
 public class CardUserController {
 	private final CardUserService cardUserService;
 
-	// TODO BUNU SİL
 	@PostMapping(ADDUSER)
-	public ResponseEntity<BaseResponseDto<VwCardUser>> addUser(@Valid @RequestBody Person person) {
-		CardUser cardUser = (CardUser) person;
+	public ResponseEntity<BaseResponseDto<VwCardUser>> addUser(@Valid @RequestBody CardUserSaveRequestDto dto) {
 		try {
-			VwCardUser vwCardUser = cardUserService.save(cardUser);
+			VwCardUser vwCardUser = cardUserService.save(dto);
 			return ResponseEntity.ok(BaseResponseDto.<VwCardUser>builder()
 					                         .message("user registered")
 					                         .code(200)
