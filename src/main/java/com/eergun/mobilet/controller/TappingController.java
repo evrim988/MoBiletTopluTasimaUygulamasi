@@ -22,8 +22,8 @@ import static com.eergun.mobilet.constants.RestApis.*;
 public class TappingController {
 	private final TappingService tappingService;
 	
-	@PostMapping(ODEME)
-	@ResponseBody
+//	@PostMapping(ODEME)
+//	@ResponseBody
 //	public ResponseEntity<BaseResponseDto<VwTapping>> tapTheCard(@Valid @RequestBody TapRequestDto request) {
 //		BaseResponseDto<VwTapping> responseDto;
 //		String serverMessage = null;
@@ -50,6 +50,9 @@ public class TappingController {
 //		                          .code(code).data(null).success(false).message(serverMessage).build();
 //		return ResponseEntity.badRequest().body(responseDto);
 //	}
+	
+	@PostMapping("/deneme")
+	@ResponseBody
 	public Long deneme(String cardSerialNumber){
 		return tappingService.deneme(cardSerialNumber);
 		
