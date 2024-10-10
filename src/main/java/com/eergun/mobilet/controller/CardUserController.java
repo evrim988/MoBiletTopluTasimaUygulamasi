@@ -22,7 +22,7 @@ import java.util.Optional;
 public class CardUserController {
 	private final CardUserService cardUserService;
 
-
+	// TODO BUNU SİL
 	@PostMapping(ADDUSER)
 	public ResponseEntity<BaseResponseDto<VwCardUser>> addUser(@Valid @RequestBody Person person) {
 		CardUser cardUser = (CardUser) person;
