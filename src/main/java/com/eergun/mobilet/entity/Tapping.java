@@ -21,7 +21,10 @@ public class Tapping extends BaseEntity{
 	Long id;
 	String cardSerialNumber;
 	@Builder.Default
-	LocalDateTime transactionDate = LocalDateTime.now();
+	Long transactionDate = System.currentTimeMillis();
 	VehicleType vehicleType;
+	String plateNo;
+	Boolean isTransfer;
+	
 	
 }

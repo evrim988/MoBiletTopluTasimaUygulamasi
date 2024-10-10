@@ -1,4 +1,4 @@
-package com.eergun.mobilet.exception;
+package com.eergun.mobilet.exceptions;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(){

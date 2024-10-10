@@ -1,7 +1,7 @@
 package com.eergun.mobilet.entity.card;
 
 
-import com.eergun.mobilet.exception.BakiyeYetersizException;
+import com.eergun.mobilet.exceptions.BakiyeYetersizException;
 import com.eergun.mobilet.utility.enums.CardType;
 import com.eergun.mobilet.utility.enums.VehicleType;
 import jakarta.persistence.*;

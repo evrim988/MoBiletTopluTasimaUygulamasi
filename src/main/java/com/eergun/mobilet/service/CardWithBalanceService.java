@@ -1,6 +1,6 @@
 package com.eergun.mobilet.service;
 
-import com.eergun.mobilet.exception.CardNotFoundException;
+import com.eergun.mobilet.exceptions.CardNotFoundException;
 import com.eergun.mobilet.dto.request.AddMoneyRequestDto;
 import com.eergun.mobilet.entity.card.CardWithBalance;
 import com.eergun.mobilet.repository.CardWithBalanceRepository;
