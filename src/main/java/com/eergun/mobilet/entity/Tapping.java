@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -22,8 +20,9 @@ public class Tapping extends BaseEntity{
 	String cardSerialNumber;
 	@Builder.Default
 	Long transactionDate = System.currentTimeMillis();
+	@Enumerated(EnumType.STRING)
 	VehicleType vehicleType;
-	String plateNo;
+	String vehicleSerialNo;
 	Boolean isTransfer;
 	
 	

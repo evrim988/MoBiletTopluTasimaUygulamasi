@@ -18,14 +18,21 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "tblcardwithdiscount")
 @DiscriminatorValue("card_with_discount")
 public class CardWithDiscount extends CardWithBalance {
-	Double discount;
+
 	Long cardUserId;
 	@Enumerated(EnumType.STRING)
 	CardType cardType;
 	
 	@Override
-	public void tapTheCard(VehicleType vehicleType){
-		double newBalance = this.getBalance()-vehicleType.getPrice() * this.getCardType().getDiscountRate();
+	public void tapTheCard(VehicleType vehicleType,Boolean isTransfer){
+		double newBalance;
+		if(isTransfer){
+			newBalance = this.getBalance()-vehicleType.getPrice()*this.getCardType().getDiscountRate()*this.getCardType().getTransferDiscountedAmount();
+		}
+		else{
+			newBalance = this.getBalance()-vehicleType.getPrice() * this.getCardType().getDiscountRate();
+		}
+
 		if(newBalance < 0){
 			throw new BakiyeYetersizException();
 		}

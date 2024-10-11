@@ -3,19 +3,14 @@ package com.eergun.mobilet.utility.data;
 import com.eergun.mobilet.entity.CardUser;
 import com.eergun.mobilet.entity.Vehicle;
 import com.eergun.mobilet.entity.card.AnonymousCard;
-import com.eergun.mobilet.entity.card.Card;
-import com.eergun.mobilet.entity.card.CardWithDiscount;
 import com.eergun.mobilet.repository.AnonymousCardRepository;
 import com.eergun.mobilet.repository.CardUserRepository;
 import com.eergun.mobilet.repository.VehicleRepository;
-import com.eergun.mobilet.service.AnonymousCardService;
-import com.eergun.mobilet.service.CardUserService;
 import com.eergun.mobilet.utility.enums.VehicleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,19 +48,26 @@ public class GenerateData implements ApplicationRunner {
 	
 	private void createCard() {
 		for (int i = 0; i < 100; i++) {
-			AnonymousCard anonymousCard = AnonymousCard.builder().serialNumber(UUID.randomUUID().toString()).build();
+			AnonymousCard anonymousCard = AnonymousCard.builder().serialNumber(UUID.randomUUID().toString())
+					.balance(1000).build();
 			anonymousCardRepository.save(anonymousCard);
 		}
 		
 		}
 		private void createVehicle(){
-			Vehicle vehicle = Vehicle.builder().plateNo("41KS123").type(VehicleType.FERRY).build();
-			Vehicle vehicle1 = Vehicle.builder().plateNo("01ADN190").type(VehicleType.BUS).build();
-			Vehicle vehicle2 = Vehicle.builder().plateNo("59CRL124").type(VehicleType.FUNICULAR).build();
-			Vehicle vehicle3 = Vehicle.builder().plateNo("16ACA420").type(VehicleType.METRO).build();
-			Vehicle vehicle4 = Vehicle.builder().plateNo("34IST034").type(VehicleType.TRAM).build();
-			
-			vehicleRepository.saveAll(List.of(vehicle, vehicle1, vehicle2, vehicle3, vehicle4));
+			Vehicle vehicle1 = Vehicle.builder().vehicleSerialNo("F_1000").type(VehicleType.FERRY).build();
+			Vehicle vehicle2 = Vehicle.builder().vehicleSerialNo("F_1001").type(VehicleType.FERRY).build();
+			Vehicle vehicle3 = Vehicle.builder().vehicleSerialNo("B_1000").type(VehicleType.BUS).build();
+			Vehicle vehicle4 = Vehicle.builder().vehicleSerialNo("B_1001").type(VehicleType.BUS).build();
+			Vehicle vehicle5 = Vehicle.builder().vehicleSerialNo("FU_100").type(VehicleType.FUNICULAR).build();
+			Vehicle vehicle6 = Vehicle.builder().vehicleSerialNo("FU_101").type(VehicleType.FUNICULAR).build();
+			Vehicle vehicle7 = Vehicle.builder().vehicleSerialNo("M_1000").type(VehicleType.METRO).build();
+			Vehicle vehicle8 = Vehicle.builder().vehicleSerialNo("M_1001").type(VehicleType.METRO).build();
+			Vehicle vehicle9 = Vehicle.builder().vehicleSerialNo("T_1000").type(VehicleType.TRAM).build();
+			Vehicle vehicle10 = Vehicle.builder().vehicleSerialNo("T_1001").type(VehicleType.TRAM).build();
+
+			vehicleRepository.saveAll(List.of(vehicle1,vehicle2,vehicle3,vehicle4,vehicle5,vehicle6,vehicle7,vehicle8,
+												vehicle9,vehicle10));
 			
 		}
 		

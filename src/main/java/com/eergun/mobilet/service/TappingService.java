@@ -8,10 +8,13 @@ import com.eergun.mobilet.entity.card.Card;
 import com.eergun.mobilet.exceptions.CardNotFoundException;
 import com.eergun.mobilet.repository.TappingRepository;
 import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.utility.time.TimeConvertor;
 import com.eergun.mobilet.view.VwTapping;
+import static com.eergun.mobilet.constants.FieldConstants.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,42 +22,81 @@ import java.util.Optional;
 public class TappingService {
 	private final TappingRepository tappingRepository;
 	private final CardService cardService;
+	private final VehicleService vehicleService;
 	
-//	public BaseResponseDto<VwTapping> tapTheCard(TapRequestDto request) {
-//		String cardSerialNumber = request.getSerialNumber();
-//		Optional<Card> optCard = cardService.findBySerialNumber(cardSerialNumber);
-//		Optional<Tapping> tapping;
-//		Long transactionDate = 0L;
-//		if (optCard.isEmpty()) {
-//			throw new CardNotFoundException();
-//		}
-//		else {
-//			Card card = optCard.get();
-////			tapping =
-////					tappingRepository.findTopByCardSerialNumberAndIsTransferFalseOrderByTransactionDateDesc(cardSerialNumber);
-//			if (tapping.isPresent()) {
-//				transactionDate = tapping.get().getTransactionDate();
-//			}
-//			VehicleType vehicleType = request.getVehicleType();
-//			card.tapTheCard(vehicleType);
-//			String message = card.getRemainingUsageMessage();
-//			cardService.save(card);
-//			tappingRepository.save(Tapping.builder()
-//					                       .vehicleType(vehicleType)
-//					                       .cardSerialNumber(cardSerialNumber)
-//					                       .build());
-//			return BaseResponseDto.<VwTapping>builder().code(200)
-//			                      .data(VwTapping.builder().message(message).build())
-//			                      .message("tapping process successful").success(true).build();
-//		}
-//
-//
-//	}
-	
-	public Long deneme(String cardSerialNumber){
-		TransactionDateDto topByCardSerialNumberAndIsTransferFalseOrderByTransactionDateDesc =
-				tappingRepository.findTopByCardSerialNumberAndIsTransferFalseOrderByTransactionDateDesc(cardSerialNumber);
-		return topByCardSerialNumberAndIsTransferFalseOrderByTransactionDateDesc.getTransactionDate();
+	public BaseResponseDto<VwTapping> tapTheCard(TapRequestDto request) {
+
+		if(!vehicleService.existsByVehicalSerialNo(request.getVehicleSerialNo())) {
+			throw new RuntimeException("Araç bulunamadı"); //TODO: Araç bulunamadı exceptionu yapılacak.
+		}
+
+		String cardSerialNumber = request.getSerialNumber();
+		String vehicleSerialNo = request.getVehicleSerialNo();
+		Optional<Card> optCard = cardService.findBySerialNumber(cardSerialNumber);
+
+		if (optCard.isEmpty()) {
+			throw new CardNotFoundException();
+		}
+		else {
+			Card card = optCard.get();
+
+			Long transactionDate = getLatestTransactionDate(cardSerialNumber);
+
+			boolean isTransfer = isTransactionTransferType(transactionDate);
+
+			if(isTransfer) {
+				List<String> vehicleNoList = getVehicleSerialNoListByTransactionDate(cardSerialNumber, transactionDate);
+				vehicleNoList.forEach(System.out::println);
+				for(String v : vehicleNoList) {
+					if(v.equals(vehicleSerialNo)) {
+						isTransfer = false;
+						break;
+					}
+				}
+			}
+
+			VehicleType vehicleType = request.getVehicleType();
+			card.tapTheCard(vehicleType,isTransfer);
+			String message = isTransfer ? ("Transfer->"+card.getRemainingUsageMessage()) : (card.getRemainingUsageMessage());
+			cardService.save(card);
+			tappingRepository.save(Tapping.builder()
+					                       .vehicleType(vehicleType)
+								           .isTransfer(isTransfer)
+					                       .cardSerialNumber(cardSerialNumber)
+										   .vehicleSerialNo(vehicleSerialNo)
+					                       .build());
+			return BaseResponseDto.<VwTapping>builder().code(200)
+			                      .data(VwTapping.builder().message(message).build())
+			                      .message("tapping process successful").success(true).build();
+		}
+
+
 	}
+	
+	public Long getLatestTransactionDate(String cardSerialNumber){
+		TransactionDateDto transactionDateDto =
+				tappingRepository.findTopByCardSerialNumberAndIsTransferFalseOrderByTransactionDateDesc(cardSerialNumber);
+		if(transactionDateDto==null){
+			return 0L;
+		}
+		return transactionDateDto.getTransactionDate();
+
+	}
+
+
+
+	public boolean isTransactionTransferType(long transactionDate){
+
+		Long transferTime = TimeConvertor
+				.millisToMinutes((System.currentTimeMillis())-transactionDate);
+		System.out.println(transferTime);
+        return transferTime < maxTransferTime;
+    }
+
+	public List<String> getVehicleSerialNoListByTransactionDate(String cardSerialNumber, Long transactionDate){
+		return tappingRepository.findVehicleSerialNoListByTransactionDate(cardSerialNumber,transactionDate);
+	}
+
+
 	
 }

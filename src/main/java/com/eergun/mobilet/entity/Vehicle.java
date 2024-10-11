@@ -16,7 +16,7 @@ public class Vehicle extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	String plateNo;
+	String vehicleSerialNo;
 	@Enumerated(EnumType.STRING)
 	VehicleType type;
 
