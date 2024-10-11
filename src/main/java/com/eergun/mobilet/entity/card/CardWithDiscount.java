@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -25,6 +27,9 @@ public class CardWithDiscount extends CardWithBalance {
 	
 	@Override
 	public void tapTheCard(VehicleType vehicleType,Boolean isTransfer){
+		if(this.getExpirationDate()< System.currentTimeMillis()){
+			this.setCardType(CardType.DEFAULT);
+		}
 		double newBalance;
 		if(isTransfer){
 			newBalance = this.getBalance()-vehicleType.getPrice()*this.getCardType().getDiscountRate()*this.getCardType().getTransferDiscountedAmount();
