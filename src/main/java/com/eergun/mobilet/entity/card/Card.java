@@ -24,7 +24,7 @@ public abstract class Card extends BaseEntity {
 	@Column
 	String serialNumber;
 	
-	public abstract void tapTheCard(VehicleType vehicleType) throws BakiyeYetersizException;
+	public abstract void tapTheCard(VehicleType vehicleType,Boolean isTransfer) throws BakiyeYetersizException;
 	public abstract String getRemainingUsageMessage();
 
 

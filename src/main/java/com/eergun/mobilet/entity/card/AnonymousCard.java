@@ -31,8 +31,15 @@ public class AnonymousCard extends CardWithBalance {
 	}
 	
 	@Override
-	public void tapTheCard(VehicleType vehicleType){
-		double newBalance = this.getBalance()-vehicleType.getPrice() * CardType.DEFAULT.getDiscountRate();
+	public void tapTheCard(VehicleType vehicleType,Boolean isTransfer){
+		double newBalance;
+		if(isTransfer){
+			newBalance = this.getBalance()-vehicleType.getPrice()*CardType.DEFAULT.getDiscountRate()*CardType.DEFAULT.getTransferDiscountedAmount();
+		}
+		else{
+			newBalance = this.getBalance()-vehicleType.getPrice() * CardType.DEFAULT.getDiscountRate();
+		}
+
 		if(newBalance < 0){
 			throw new BakiyeYetersizException();
 		}
