@@ -1,20 +1,15 @@
 package com.eergun.mobilet.entity.card;
 
+import com.eergun.mobilet.exceptions.BakiyeYetersizException;
+import com.eergun.mobilet.utility.enums.CardType;
 import com.eergun.mobilet.utility.enums.VehicleType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.query.sqm.TemporalUnit;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 @NoArgsConstructor
@@ -27,9 +22,28 @@ public class CardSubscription extends Card{
     Integer remainingTap;
     @Builder.Default()
     Long expirationDate = Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli();
+    private CardType cardType;
 
     @Override
     public void tapTheCard(VehicleType vehicleType,Boolean isTransfer) {
+
+//        if(this.getExpirationDate()< System.currentTimeMillis()){
+//            this.setCardType(CardType.DEFAULT);
+//        }
+
+
+       int newRemainingTap;
+        if(isTransfer){
+            newRemainingTap = this.getRemainingTap()-1;
+        }
+        else{
+            newRemainingTap = this.getRemainingTap()-vehicleType.getTapCount();
+        }
+
+        if(newRemainingTap < 0){
+            throw new BakiyeYetersizException();
+        }
+        this.setRemainingTap(newRemainingTap);
 
     }
 
