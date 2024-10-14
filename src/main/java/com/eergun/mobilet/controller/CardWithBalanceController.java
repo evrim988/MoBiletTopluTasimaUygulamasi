@@ -1,7 +1,8 @@
 package com.eergun.mobilet.controller;
 
-import com.eergun.mobilet.exceptions.CardNotFoundException;
+
 import static com.eergun.mobilet.constants.RestApis.*;
+
 import com.eergun.mobilet.dto.request.AddMoneyRequestDto;
 import com.eergun.mobilet.entity.card.CardWithBalance;
 import com.eergun.mobilet.service.CardWithBalanceService;
@@ -25,14 +26,11 @@ public class CardWithBalanceController {
 
     @PostMapping(ADDMONEY)
     public ResponseEntity<CardWithBalance> makeDeposit(@RequestBody @Valid AddMoneyRequestDto addMoneyRequestDto) {
-        try {
-            CardWithBalance cardWithBalance = cardWithBalanceService.findBySerialNumber(addMoneyRequestDto);
-            
-            return ResponseEntity.ok(cardWithBalance);
-        }
-        catch (CardNotFoundException e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().body(null);
-        }
+
+        CardWithBalance cardWithBalance = cardWithBalanceService.findBySerialNumber(addMoneyRequestDto);
+
+        return ResponseEntity.ok(cardWithBalance);
+
+
     }
 }

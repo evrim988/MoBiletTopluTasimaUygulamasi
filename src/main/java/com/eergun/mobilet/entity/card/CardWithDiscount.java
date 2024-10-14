@@ -1,7 +1,8 @@
 package com.eergun.mobilet.entity.card;
 
 
-import com.eergun.mobilet.exceptions.BakiyeYetersizException;
+import com.eergun.mobilet.exception.BakiyeYetersizException;
+import com.eergun.mobilet.exception.ErrorType;
 import com.eergun.mobilet.utility.enums.CardType;
 import com.eergun.mobilet.utility.enums.VehicleType;
 import jakarta.persistence.*;
@@ -39,7 +40,7 @@ public class CardWithDiscount extends CardWithBalance {
 		}
 
 		if(newBalance < 0){
-			throw new BakiyeYetersizException();
+			throw new BakiyeYetersizException(ErrorType.BAKIYE_YETERSIZ);
 		}
 		this.setBalance(newBalance);
 	}

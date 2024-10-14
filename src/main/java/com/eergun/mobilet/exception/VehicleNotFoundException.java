@@ -3,10 +3,10 @@ package com.eergun.mobilet.exception;
 import lombok.Getter;
 
 @Getter
-public class UserNotFoundException extends RuntimeException{
+public class VehicleNotFoundException extends RuntimeException {
     private ErrorType errorType;
 
-    public UserNotFoundException(ErrorType errorType) {
+    public VehicleNotFoundException(ErrorType errorType) {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
