@@ -5,7 +5,9 @@ import com.eergun.mobilet.dto.response.BaseResponseDto;
 import com.eergun.mobilet.dto.response.TransactionDateDto;
 import com.eergun.mobilet.entity.Tapping;
 import com.eergun.mobilet.entity.card.Card;
-import com.eergun.mobilet.exceptions.CardNotFoundException;
+import com.eergun.mobilet.exception.CardNotFoundException;
+import com.eergun.mobilet.exception.ErrorType;
+import com.eergun.mobilet.exception.VehicleNotFoundException;
 import com.eergun.mobilet.repository.TappingRepository;
 import com.eergun.mobilet.utility.enums.VehicleType;
 import com.eergun.mobilet.utility.time.TimeConvertor;
@@ -27,7 +29,7 @@ public class TappingService {
 	public BaseResponseDto<VwTapping> tapTheCard(TapRequestDto request) {
 
 		if(!vehicleService.existsByVehicalSerialNo(request.getVehicleSerialNo())) {
-			throw new RuntimeException("Araç bulunamadı"); //TODO: Araç bulunamadı exceptionu yapılacak.
+			throw new VehicleNotFoundException(ErrorType.VEHICLE_NOT_FOUND);
 		}
 
 		String cardSerialNumber = request.getSerialNumber();
@@ -35,7 +37,7 @@ public class TappingService {
 		Optional<Card> optCard = cardService.findBySerialNumber(cardSerialNumber);
 
 		if (optCard.isEmpty()) {
-			throw new CardNotFoundException();
+			throw new CardNotFoundException(ErrorType.CARD_NOT_FOUND);
 		}
 		else {
 			Card card = optCard.get();

@@ -1,8 +1,13 @@
 package com.eergun.mobilet.exception;
 
-public class CardNotFoundException extends RuntimeException {
+import lombok.Getter;
 
-    public CardNotFoundException() {
-        super("Card not found: ");
+@Getter
+public class CardNotFoundException extends RuntimeException {
+    private ErrorType errorType;
+
+    public CardNotFoundException(ErrorType errorType) {
+        super(errorType.getMessage());
+        this.errorType = errorType;
     }
 }

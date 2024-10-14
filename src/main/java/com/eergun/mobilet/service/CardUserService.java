@@ -20,7 +20,7 @@ public class CardUserService{
 	}
 
 	public VwCardUser save(CardUserSaveRequestDto dto) {
-		CardUser cardUser = CardUserMapper.mapToCardUser(dto);
+		CardUser cardUser = CardUserMapper.INSTANCE.fromCardUserSaveRequestDto(dto);
 		cardUserRepository.save(cardUser);
 		return VwCardUser.builder()
 				                           .phone(cardUser.getPhone())

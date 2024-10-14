@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,8 +18,9 @@ import java.time.temporal.ChronoUnit;
 @Entity
 public abstract class CardWithBalance extends Card{
 	double balance;
+
 	@Builder.Default
-	Long expirationDate = Instant.now().plus(1, ChronoUnit.YEARS).toEpochMilli();
+	Long expirationDate = ZonedDateTime.now().plus(1, ChronoUnit.YEARS).toInstant().toEpochMilli();
 	
 	@Override
 	public String getRemainingUsageMessage() {

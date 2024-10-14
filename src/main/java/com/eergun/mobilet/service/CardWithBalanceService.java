@@ -1,8 +1,9 @@
 package com.eergun.mobilet.service;
 
-import com.eergun.mobilet.exceptions.CardNotFoundException;
+import com.eergun.mobilet.exception.CardNotFoundException;
 import com.eergun.mobilet.dto.request.AddMoneyRequestDto;
 import com.eergun.mobilet.entity.card.CardWithBalance;
+import com.eergun.mobilet.exception.ErrorType;
 import com.eergun.mobilet.repository.CardWithBalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,6 @@ public class CardWithBalanceService {
             cardWithBalanceRepository.save(cardWithBalance);
             return cardWithBalance;
         }
-        throw new CardNotFoundException();
+        throw new CardNotFoundException(ErrorType.CARD_NOT_FOUND);
     }
 }
