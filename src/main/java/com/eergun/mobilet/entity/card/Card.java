@@ -2,8 +2,8 @@ package com.eergun.mobilet.entity.card;
 
 import com.eergun.mobilet.entity.BaseEntity;
 
-import com.eergun.mobilet.exception.BakiyeYetersizException;
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.entity.enums.VehicleType;
+import com.eergun.mobilet.exception.MobiletException;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,9 +22,10 @@ public abstract class Card extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Column
+	@GeneratedValue(strategy = GenerationType.UUID)
 	String serialNumber;
 	
-	public abstract void tapTheCard(VehicleType vehicleType,Boolean isTransfer) throws BakiyeYetersizException;
+	public abstract void tapTheCard(VehicleType vehicleType,Boolean isTransfer);
 	public abstract String getRemainingUsageMessage();
 
 

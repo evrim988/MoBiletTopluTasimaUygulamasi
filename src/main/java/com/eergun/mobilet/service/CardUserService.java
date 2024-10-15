@@ -23,10 +23,14 @@ public class CardUserService{
 		CardUser cardUser = CardUserMapper.INSTANCE.fromCardUserSaveRequestDto(dto);
 		cardUserRepository.save(cardUser);
 		return VwCardUser.builder()
-				                           .phone(cardUser.getPhone())
-				                           .adress(cardUser.getAdress())
-				                           .lastName(cardUser.getLastName())
-				                           .name(cardUser.getName())
-		                                     .build();
+                           .phone(cardUser.getPhone())
+                           .adress(cardUser.getAdress())
+                           .lastName(cardUser.getLastName())
+                           .name(cardUser.getName())
+                             .build();
+	}
+	
+	public boolean existsById(Long userId) {
+		return cardUserRepository.existsById(userId);
 	}
 }

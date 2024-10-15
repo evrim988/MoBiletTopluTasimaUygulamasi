@@ -1,9 +1,9 @@
 package com.eergun.mobilet.service;
 
 import com.eergun.mobilet.entity.card.Card;
+import com.eergun.mobilet.exception.ErrorType;
+import com.eergun.mobilet.exception.MobiletException;
 import com.eergun.mobilet.repository.CardRepository;
-import com.eergun.mobilet.utility.enums.VehicleType;
-import com.eergun.mobilet.view.VwCard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,11 @@ public class CardService {
         return cardRepository.existsCardBySerialNumber(serialNumber);
     }
     
-    public Optional<Card> findBySerialNumber(String serialNumber) {
-        return cardRepository.findOptionalBySerialNumber(serialNumber);
+    public Card findBySerialNumber(String serialNumber) {
+        Optional<Card> optCard = cardRepository.findOptionalBySerialNumber(serialNumber);
+        if (optCard.isPresent()) {
+            return optCard.get();
+        }
+        throw new MobiletException(ErrorType.CARD_NOT_FOUND);
     }
 }

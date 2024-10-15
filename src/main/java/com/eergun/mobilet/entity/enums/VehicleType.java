@@ -1,4 +1,4 @@
-package com.eergun.mobilet.utility.enums;
+package com.eergun.mobilet.entity.enums;
 
 public enum VehicleType {
 	BUS(27.5,1)

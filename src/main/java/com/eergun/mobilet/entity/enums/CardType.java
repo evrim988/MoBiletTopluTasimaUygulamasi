@@ -1,4 +1,4 @@
-package com.eergun.mobilet.utility.enums;
+package com.eergun.mobilet.entity.enums;
 
 public enum CardType {
 	DEFAULT(1.0,0.5),

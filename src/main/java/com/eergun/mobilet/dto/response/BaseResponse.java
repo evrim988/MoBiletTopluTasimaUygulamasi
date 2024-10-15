@@ -1,12 +1,11 @@
 package com.eergun.mobilet.dto.response;
-import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class BaseResponseDto<T> {
+public class BaseResponse<T> {
 	Boolean success;
 	String message;
 	Integer code;

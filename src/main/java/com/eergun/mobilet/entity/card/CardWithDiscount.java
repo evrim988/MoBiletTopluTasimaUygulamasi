@@ -1,15 +1,16 @@
 package com.eergun.mobilet.entity.card;
 
 
-import com.eergun.mobilet.exception.BakiyeYetersizException;
 import com.eergun.mobilet.exception.ErrorType;
-import com.eergun.mobilet.utility.enums.CardType;
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.exception.MobiletException;
+import com.eergun.mobilet.entity.enums.CardType;
+import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,6 +27,10 @@ public class CardWithDiscount extends CardWithBalance {
 	@Enumerated(EnumType.STRING)
 	CardType cardType;
 	
+	@Builder.Default
+	Long expirationDate = ZonedDateTime.now().plus(1, ChronoUnit.YEARS).toInstant().toEpochMilli();
+	
+	
 	@Override
 	public void tapTheCard(VehicleType vehicleType,Boolean isTransfer){
 		if(this.getExpirationDate()< System.currentTimeMillis()){
@@ -40,7 +45,7 @@ public class CardWithDiscount extends CardWithBalance {
 		}
 
 		if(newBalance < 0){
-			throw new BakiyeYetersizException(ErrorType.BAKIYE_YETERSIZ);
+			throw new MobiletException(ErrorType.BAKIYE_YETERSIZ);
 		}
 		this.setBalance(newBalance);
 	}

@@ -1,9 +1,9 @@
 package com.eergun.mobilet.entity.card;
 
 import com.eergun.mobilet.exception.ErrorType;
-import com.eergun.mobilet.exception.BakiyeYetersizException;
-import com.eergun.mobilet.utility.enums.CardType;
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.exception.MobiletException;
+import com.eergun.mobilet.entity.enums.CardType;
+import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -24,19 +23,19 @@ import java.time.temporal.ChronoUnit;
 @DiscriminatorValue("cardsubscription")
 @Entity
 @Table(name = "tblcardsubscription")
-public class CardSubscription extends Card{
+public class CardWithSubscription extends Card{
 
     Integer remainingTap;
     @Builder.Default()
-    Long expirationDate = ZonedDateTime.now().plus(1, ChronoUnit.YEARS).toInstant().toEpochMilli();
+    Long expirationDate = ZonedDateTime.now().plus(1, ChronoUnit.MONTHS).toInstant().toEpochMilli();
     private CardType cardType;
 
     @Override
     public void tapTheCard(VehicleType vehicleType,Boolean isTransfer) {
 
-//        if(this.getExpirationDate()< System.currentTimeMillis()){
-//            this.setCardType(CardType.DEFAULT);
-//        }
+        if(this.getExpirationDate()< System.currentTimeMillis()){
+            this.setCardType(CardType.DEFAULT);
+        }
 
 
        int newRemainingTap;
@@ -46,9 +45,9 @@ public class CardSubscription extends Card{
         else{
             newRemainingTap = this.getRemainingTap()-vehicleType.getTapCount();
         }
-
+        
         if(newRemainingTap < 0){
-            throw new BakiyeYetersizException(ErrorType.BAKIYE_YETERSIZ);
+            throw new MobiletException(ErrorType.BAKIYE_YETERSIZ);
         }
         this.setRemainingTap(newRemainingTap);
 

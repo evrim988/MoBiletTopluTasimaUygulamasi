@@ -11,8 +11,9 @@ public enum ErrorType {
     VALIDATION_ERROR(4000,"Parametreler hatalıdır, lütfene tekrar deneyiniz",HttpStatus.BAD_REQUEST),
     BAKIYE_YETERSIZ(4001,"Bakiyeniz yetersiz!",HttpStatus.BAD_REQUEST),
     CARD_NOT_FOUND(4002,"Kart bulunamadı.",HttpStatus.NOT_FOUND),
-    VEHICLE_NOT_FOUND(4003,"Araç bulunamadı",HttpStatus.NOT_FOUND);
-
+    VEHICLE_NOT_FOUND(4003,"Araç bulunamadı",HttpStatus.NOT_FOUND),
+    USER_NOT_FOUND(4004, "Kullanıcı bulunamadı", HttpStatus.NOT_FOUND);
+    
     private int code;
     private String message;
     private HttpStatus status;

@@ -1,6 +1,6 @@
 package com.eergun.mobilet.entity;
 
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

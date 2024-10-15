@@ -1,4 +1,4 @@
-package com.eergun.mobilet.utility.enums;
+package com.eergun.mobilet.entity.enums;
 
 public enum JobTitle {
 	DRIVER, MACHINIST, SECURITY

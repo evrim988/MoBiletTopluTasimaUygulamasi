@@ -1,6 +1,6 @@
 package com.eergun.mobilet.entity;
 
-import com.eergun.mobilet.utility.enums.JobTitle;
+import com.eergun.mobilet.entity.enums.JobTitle;
 
 import jakarta.persistence.*;
 import lombok.*;

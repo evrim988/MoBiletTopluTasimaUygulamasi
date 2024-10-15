@@ -6,7 +6,7 @@ import com.eergun.mobilet.entity.card.AnonymousCard;
 import com.eergun.mobilet.repository.AnonymousCardRepository;
 import com.eergun.mobilet.repository.CardUserRepository;
 import com.eergun.mobilet.repository.VehicleRepository;
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.entity.enums.VehicleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

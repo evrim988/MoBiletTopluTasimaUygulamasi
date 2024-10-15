@@ -1,9 +1,11 @@
 package com.eergun.mobilet.entity;
 
-import com.eergun.mobilet.utility.enums.VehicleType;
+import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.time.ZonedDateTime;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,12 +20,11 @@ public class Tapping extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	String cardSerialNumber;
-	@Builder.Default
-	Long transactionDate = System.currentTimeMillis();
 	@Enumerated(EnumType.STRING)
 	VehicleType vehicleType;
 	String vehicleSerialNo;
 	Boolean isTransfer;
-	
+	@Builder.Default
+	Long transactionDate = System.currentTimeMillis();
 	
 }

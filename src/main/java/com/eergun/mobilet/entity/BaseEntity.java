@@ -1,8 +1,7 @@
 package com.eergun.mobilet.entity;
 
-import com.eergun.mobilet.utility.enums.State;
+import com.eergun.mobilet.entity.enums.State;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -1,7 +1,6 @@
 package com.eergun.mobilet.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,29 +28,7 @@ public class GlobalExceptionHandler {
                 .success(false).build(),errorType.getStatus());
     }
 
-    @ExceptionHandler(BakiyeYetersizException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> bakiyeYetersizExceptionHandler(BakiyeYetersizException exception){
-        return createResponseEntity(exception.getErrorType(), null);
-    }
-
-    @ExceptionHandler(CardNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> cardNotFoundExceptionHandler(CardNotFoundException exception){
-        return createResponseEntity(exception.getErrorType(), null);
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> userNotFoundExceptionHandler(UserNotFoundException exception){
-        return createResponseEntity(exception.getErrorType(), null);
-    }
-
-    @ExceptionHandler(VehicleNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorMessage> vehicleNotFoundExceptionHandler(VehicleNotFoundException exception){
-        return createResponseEntity(exception.getErrorType(), null);
-    }
+    
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -65,5 +42,9 @@ public class GlobalExceptionHandler {
                 });
         return createResponseEntity(ErrorType.VALIDATION_ERROR,fieldErrors);
     }
-
+    
+    @ExceptionHandler(MobiletException.class)
+    public ResponseEntity<ErrorMessage> mobiletExceptionHandler(MobiletException exception){
+        return  createResponseEntity(exception.getErrorType(),null);
+    }
 }

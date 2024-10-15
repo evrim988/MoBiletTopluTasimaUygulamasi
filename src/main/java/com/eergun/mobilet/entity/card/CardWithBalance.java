@@ -14,14 +14,11 @@ import java.time.temporal.ChronoUnit;
 @SuperBuilder
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="tblcardwithbalance")
+@Table(name = "tblcardwithbalance")
 @Entity
-public abstract class CardWithBalance extends Card{
-	double balance;
-
+public abstract class CardWithBalance extends Card {
 	@Builder.Default
-	Long expirationDate = ZonedDateTime.now().plus(1, ChronoUnit.YEARS).toInstant().toEpochMilli();
-	
+	double balance = 0;
 	@Override
 	public String getRemainingUsageMessage() {
 		return "Kalan bakiye: " + balance + "₺";

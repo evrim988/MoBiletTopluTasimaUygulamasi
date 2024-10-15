@@ -1,6 +1,6 @@
 package com.eergun.mobilet.controller;
 
-import com.eergun.mobilet.dto.response.BaseResponseDto;
+import com.eergun.mobilet.dto.response.BaseResponse;
 
 import static com.eergun.mobilet.constants.RestApis.*;
 
@@ -20,25 +20,19 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping(GETALL)
-    public ResponseEntity<BaseResponseDto<List<String>>> getAllCards() {
-        List<String> serialNumberList = cardService.findAllSerialNumbers();
-        try {
-            return ResponseEntity.ok(BaseResponseDto.<List<String>>builder()
-                    .code(200)
-                    .data(serialNumberList)
-                    .message("card view")
-                    .success(true)
-                    .build());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<BaseResponse<List<String>>> getAllCards() {
+        return ResponseEntity.ok(BaseResponse.<List<String>>builder()
+                                             .code(200)
+                                             .data(cardService.findAllSerialNumbers())
+                                             .message("card view")
+                                             .success(true).build());
+        
     }
-
-
     @PostMapping(FINDBYCARDSERIALNUMBER)
-    public ResponseEntity<Boolean> existsBySerialNumber(@Size(min = 36, max = 36) String serialNumber) {
-        return ResponseEntity.ok(cardService.existsBySerialNumber(serialNumber));
+    public ResponseEntity<BaseResponse<Boolean>> existsBySerialNumber(@Size(min = 36, max = 36) String serialNumber) {
+        return ResponseEntity.ok(BaseResponse.<Boolean>builder().success(true).code(200)
+                                         .message("seri numarası bulundu")
+                                         .data(cardService.existsBySerialNumber(serialNumber))
+                                         .build());
     }
-
 }
