@@ -12,7 +12,8 @@ public enum ErrorType {
     BAKIYE_YETERSIZ(4001,"Bakiyeniz yetersiz!",HttpStatus.BAD_REQUEST),
     CARD_NOT_FOUND(4002,"Kart bulunamadı.",HttpStatus.NOT_FOUND),
     VEHICLE_NOT_FOUND(4003,"Araç bulunamadı",HttpStatus.NOT_FOUND),
-    USER_NOT_FOUND(4004, "Kullanıcı bulunamadı", HttpStatus.NOT_FOUND);
+    USER_NOT_FOUND(4004, "Kullanıcı bulunamadı", HttpStatus.NOT_FOUND),
+    STATION_CONFLICT(4005,"Girilen durak ile araç hattı bağdaşmamaktadır.",HttpStatus.CONFLICT);
     
     private int code;
     private String message;

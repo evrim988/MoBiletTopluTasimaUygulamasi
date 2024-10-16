@@ -1,11 +1,10 @@
 package com.eergun.mobilet.entity;
 
+import com.eergun.mobilet.entity.enums.Direction;
 import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.time.ZonedDateTime;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,5 +25,8 @@ public class Tapping extends BaseEntity{
 	Boolean isTransfer;
 	@Builder.Default
 	Long transactionDate = System.currentTimeMillis();
+	Long stationId;
+	@Enumerated(EnumType.STRING)
+	Direction direction;
 	
 }

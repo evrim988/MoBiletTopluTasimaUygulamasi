@@ -19,5 +19,7 @@ public class Vehicle extends BaseEntity{
 	String vehicleSerialNo;
 	@Enumerated(EnumType.STRING)
 	VehicleType type;
+	Long vehicleLineId;
+	
 
 }
