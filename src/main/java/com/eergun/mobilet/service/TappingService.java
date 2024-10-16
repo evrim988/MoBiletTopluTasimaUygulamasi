@@ -4,12 +4,14 @@ import com.eergun.mobilet.dto.request.TapRequestDto;
 import com.eergun.mobilet.dto.response.TransactionDateDto;
 import com.eergun.mobilet.entity.Tapping;
 import com.eergun.mobilet.entity.card.Card;
+import com.eergun.mobilet.entity.enums.Direction;
 import com.eergun.mobilet.exception.ErrorType;
 import com.eergun.mobilet.exception.MobiletException;
 import com.eergun.mobilet.mapper.TappingMapper;
 import com.eergun.mobilet.repository.TappingRepository;
 import com.eergun.mobilet.entity.enums.VehicleType;
 import com.eergun.mobilet.utility.time.TimeConvertor;
+import com.eergun.mobilet.view.VwDirectionAndVehicleSerialNumber;
 import com.eergun.mobilet.view.VwTapping;
 import static com.eergun.mobilet.constants.FieldConstants.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class TappingService {
 	private final TappingRepository tappingRepository;
 	private final CardService cardService;
 	private final VehicleService vehicleService;
+	private final StationService stationService;
 	
 	public VwTapping tapTheCard(TapRequestDto dto) {
 		if(!vehicleService.existsByVehicalSerialNo(dto.vehicleSerialNo())) {
@@ -33,7 +36,7 @@ public class TappingService {
 		Card card = cardService.findBySerialNumber(cardSerialNumber);
 		Long transactionDate = getLatestTransactionDate(cardSerialNumber);
 		
-		boolean isTransfer = isTransfer(cardSerialNumber, vehicleSerialNo, transactionDate);
+		boolean isTransfer = isTransfer(cardSerialNumber, vehicleSerialNo, transactionDate, dto.direction());
 		
 		VehicleType vehicleType = dto.vehicleType();
 		card.tapTheCard(vehicleType, isTransfer);
@@ -42,19 +45,21 @@ public class TappingService {
 		tapping.setIsTransfer(isTransfer);
 		tappingRepository.save(tapping);
 		return VwTapping.builder().message((isTransfer? "transfer->": "") +
-	                                   card.getRemainingUsageMessage()).build();
+	                                   card.getRemainingUsageMessage()).stationName(stationService.findStationNameById(dto.stationId())).build();
 	}
 	
-	private boolean isTransfer(String cardSerialNumber, String vehicleSerialNo, Long transactionDate) {
-		return isTransactionTransferTypeByTime(transactionDate) && isTransferByVehicle(cardSerialNumber, vehicleSerialNo);
+	private boolean isTransfer(String cardSerialNumber, String vehicleSerialNo, Long transactionDate, Direction direction) {
+		return isTransactionTransferTypeByTime(transactionDate) && isTransferByVehicle(cardSerialNumber,
+		                                                                               vehicleSerialNo, direction);
 	}
 	
-	private boolean isTransferByVehicle(String cardSerialNumber, String vehicleSerialNo) {
+	private boolean isTransferByVehicle(String cardSerialNumber, String vehicleSerialNo, Direction direction) {
 		Long transactionDate = getLatestTransactionDate(cardSerialNumber);
-		List<String> vehicleNoList = getVehicleSerialNoListByTransactionDate(cardSerialNumber, transactionDate);
+		List<VwDirectionAndVehicleSerialNumber> viewList = getVehicleSerialNoListByTransactionDate(cardSerialNumber,
+		                                                                                    transactionDate);
 		
-		for(String v : vehicleNoList) {
-			if(v.equals(vehicleSerialNo)) {
+		for(VwDirectionAndVehicleSerialNumber vw : viewList) {
+			if(vw.getVehicleSerialNo().equals(vehicleSerialNo) && vw.getDirection().equals(direction)) {
 				return false;
 			}
 		}
@@ -78,8 +83,12 @@ public class TappingService {
         return transferTime < maxTransferTime;
     }
 
-	public List<String> getVehicleSerialNoListByTransactionDate(String cardSerialNumber, Long transactionDate){
-		return tappingRepository.findVehicleSerialNoListByTransactionDate(cardSerialNumber,transactionDate);
+	public List<VwDirectionAndVehicleSerialNumber> getVehicleSerialNoListByTransactionDate(String cardSerialNumber, Long transactionDate){
+		return tappingRepository.findDirectionAndVehicleSerialNoByTransactionDate(cardSerialNumber,transactionDate);
+	}
+	
+	public boolean isVehicleStationCorrect(Long stationId, List<Long>){
+	
 	}
 	
 }

@@ -16,7 +16,7 @@ public interface CardUserMapper {
 
 	/*public static CardUser mapToCardUser(CardUserSaveRequestDto dto){
 		return
-				CardUser.builder().name(dto.getName()).lastName(dto.getLastName()).identityNo(dto.getIdentityNo()).adress(dto.getAdress()).email(dto.getEmail()).birthDate(dto.getBirthDate()).password(dto.getPassword()).phone(dto.getPhone()).build();
+				CardUser.builder().stationName(dto.getStationName()).lastName(dto.getLastName()).identityNo(dto.getIdentityNo()).adress(dto.getAdress()).email(dto.getEmail()).birthDate(dto.getBirthDate()).password(dto.getPassword()).phone(dto.getPhone()).build();
 		
 	}*/
 }

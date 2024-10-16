@@ -7,6 +7,7 @@ public enum CardType {
 	TEACHER(0.80,0.3),
 	MARTYR(0.75,0.25),
 	EMPLOYEE(0.75,0.25);
+	
 
 	CardType(Double discountedAmount,Double transferDiscountedAmount) {
 		this.discountRate = discountedAmount;

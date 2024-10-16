@@ -1,5 +1,6 @@
 package com.eergun.mobilet.dto.request;
 
+import com.eergun.mobilet.entity.enums.Direction;
 import com.eergun.mobilet.entity.enums.VehicleType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +15,5 @@ public record TapRequestDto(
 		VehicleType vehicleType,
 		@NotBlank
 		@Size(min = 6, max = 6)
-		String vehicleSerialNo) {
+		String vehicleSerialNo, Long stationId, Direction direction) {
 }

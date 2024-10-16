@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +23,8 @@ public abstract class Card extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	@Column
-	@GeneratedValue(strategy = GenerationType.UUID)
-	String serialNumber;
+	@Builder.Default
+	String serialNumber = UUID.randomUUID().toString();
 	
 	public abstract void tapTheCard(VehicleType vehicleType,Boolean isTransfer);
 	public abstract String getRemainingUsageMessage();

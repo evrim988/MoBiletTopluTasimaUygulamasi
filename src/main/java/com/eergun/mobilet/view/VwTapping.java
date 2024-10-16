@@ -9,4 +9,5 @@ import lombok.*;
 @Data
 public class VwTapping {
 	private String message;
+	private String stationName;
 }

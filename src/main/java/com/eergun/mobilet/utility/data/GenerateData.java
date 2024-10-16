@@ -1,11 +1,11 @@
 package com.eergun.mobilet.utility.data;
 
 import com.eergun.mobilet.entity.CardUser;
+import com.eergun.mobilet.entity.Station;
 import com.eergun.mobilet.entity.Vehicle;
+import com.eergun.mobilet.entity.VehicleLine;
 import com.eergun.mobilet.entity.card.AnonymousCard;
-import com.eergun.mobilet.repository.AnonymousCardRepository;
-import com.eergun.mobilet.repository.CardUserRepository;
-import com.eergun.mobilet.repository.VehicleRepository;
+import com.eergun.mobilet.repository.*;
 import com.eergun.mobilet.entity.enums.VehicleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -23,13 +23,35 @@ public class GenerateData implements ApplicationRunner {
 	private CardUserRepository cardUserRepository;
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	@Autowired
+	private StationRepository stationRepository;
+	@Autowired
+	private VehicleLineRepository vehicleLineRepository;
+	
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 //		createCard();
 //		createCardUser();
 //		createVehicle();
+//		createStation();
+// 	    createVehicleLine();
 
+	}
+	
+	private void createVehicleLine() {
+		for (int i = 0; i < 10; i++) {
+			VehicleLine vehicleLine = VehicleLine.builder().stationId(List.of(i*10L,(i*10L)+1L,(i*10L)+2L,
+			(i*10L)+3L,(i*10L)+4L,(i*10L)+5L,(i*10L)+6L,(i*10L)+7L,(i*10L)+8L,(i*10L)+9L)).name("Line"+i).build();
+			vehicleLineRepository.save(vehicleLine);
+		}
+		
+	}
+	private void createStation() {
+		for(int i = 0; i<100; i++){
+			Station station = Station.builder().stationName("Station"+ i).stationNumber(10000+i).build();
+			stationRepository.save(station);
+		}
 	}
 	
 	private void createCardUser() {
@@ -55,16 +77,26 @@ public class GenerateData implements ApplicationRunner {
 		
 		}
 		private void createVehicle(){
-			Vehicle vehicle1 = Vehicle.builder().vehicleSerialNo("F_1000").type(VehicleType.FERRY).build();
-			Vehicle vehicle2 = Vehicle.builder().vehicleSerialNo("F_1001").type(VehicleType.FERRY).build();
-			Vehicle vehicle3 = Vehicle.builder().vehicleSerialNo("B_1000").type(VehicleType.BUS).build();
-			Vehicle vehicle4 = Vehicle.builder().vehicleSerialNo("B_1001").type(VehicleType.BUS).build();
-			Vehicle vehicle5 = Vehicle.builder().vehicleSerialNo("FU_100").type(VehicleType.FUNICULAR).build();
-			Vehicle vehicle6 = Vehicle.builder().vehicleSerialNo("FU_101").type(VehicleType.FUNICULAR).build();
-			Vehicle vehicle7 = Vehicle.builder().vehicleSerialNo("M_1000").type(VehicleType.METRO).build();
-			Vehicle vehicle8 = Vehicle.builder().vehicleSerialNo("M_1001").type(VehicleType.METRO).build();
-			Vehicle vehicle9 = Vehicle.builder().vehicleSerialNo("T_1000").type(VehicleType.TRAM).build();
-			Vehicle vehicle10 = Vehicle.builder().vehicleSerialNo("T_1001").type(VehicleType.TRAM).build();
+			Vehicle vehicle1 =
+					Vehicle.builder().vehicleSerialNo("F_1000").vehicleLineId(1L).type(VehicleType.FERRY).build();
+			Vehicle vehicle2 =
+					Vehicle.builder().vehicleSerialNo("F_1001").vehicleLineId(2L).type(VehicleType.FERRY).build();
+			Vehicle vehicle3 =
+					Vehicle.builder().vehicleSerialNo("B_1000").vehicleLineId(3L).type(VehicleType.BUS).build();
+			Vehicle vehicle4 =
+					Vehicle.builder().vehicleSerialNo("B_1001").vehicleLineId(4L).type(VehicleType.BUS).build();
+			Vehicle vehicle5 =
+					Vehicle.builder().vehicleSerialNo("FU_100").vehicleLineId(5L).type(VehicleType.FUNICULAR).build();
+			Vehicle vehicle6 =
+					Vehicle.builder().vehicleSerialNo("FU_101").vehicleLineId(6L).type(VehicleType.FUNICULAR).build();
+			Vehicle vehicle7 =
+					Vehicle.builder().vehicleSerialNo("M_1000").vehicleLineId(7L).type(VehicleType.METRO).build();
+			Vehicle vehicle8 =
+					Vehicle.builder().vehicleSerialNo("M_1001").vehicleLineId(8L).type(VehicleType.METRO).build();
+			Vehicle vehicle9 =
+					Vehicle.builder().vehicleSerialNo("T_1000").vehicleLineId(9L).type(VehicleType.TRAM).build();
+			Vehicle vehicle10 =
+					Vehicle.builder().vehicleSerialNo("T_1001").vehicleLineId(10L).type(VehicleType.TRAM).build();
 
 			vehicleRepository.saveAll(List.of(vehicle1,vehicle2,vehicle3,vehicle4,vehicle5,vehicle6,vehicle7,vehicle8,
 												vehicle9,vehicle10));
