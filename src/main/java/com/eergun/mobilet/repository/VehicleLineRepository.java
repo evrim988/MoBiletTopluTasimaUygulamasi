@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface VehicleLineRepository extends JpaRepository<VehicleLine, Long> {
 	
-	
+	//
 	@Query("select vl.stationId   from VehicleLine vl where vl.id=?1")
 	List<Long> findStationIdByVehicleLineId(Long vehicleLineId);
 }
