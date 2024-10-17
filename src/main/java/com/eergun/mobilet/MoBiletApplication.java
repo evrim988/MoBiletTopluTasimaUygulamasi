@@ -13,7 +13,6 @@ import java.util.Set;
 public class MoBiletApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MoBiletApplication.class, args);
-		
 	}
 	
 }

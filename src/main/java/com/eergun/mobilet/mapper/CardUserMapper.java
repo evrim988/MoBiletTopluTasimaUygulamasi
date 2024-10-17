@@ -11,6 +11,7 @@ public interface CardUserMapper {
 
 	CardUserMapper INSTANCE = Mappers.getMapper(CardUserMapper.class);
 
+
 	CardUser fromCardUserSaveRequestDto(final CardUserSaveRequestDto cardUserSaveRequestDto);
 
 

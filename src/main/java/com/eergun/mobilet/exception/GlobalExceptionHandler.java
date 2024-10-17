@@ -1,5 +1,6 @@
 package com.eergun.mobilet.exception;
 
+import com.eergun.mobilet.utility.Audio.AudioPlayer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,6 +46,9 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(MobiletException.class)
     public ResponseEntity<ErrorMessage> mobiletExceptionHandler(MobiletException exception){
+        if (exception.getErrorType().equals(ErrorType.BAKIYE_YETERSIZ)) {
+            AudioPlayer.playAudio("src/main/java/com/eergun/mobilet/utility/Audio/BakiyenizYetersiz.wav");
+        }
         return  createResponseEntity(exception.getErrorType(),null);
     }
 }
