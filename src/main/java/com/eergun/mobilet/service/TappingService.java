@@ -2,7 +2,6 @@ package com.eergun.mobilet.service;
 
 import com.eergun.mobilet.dto.request.TapRequestDto;
 import com.eergun.mobilet.dto.response.TransactionDateDto;
-import com.eergun.mobilet.entity.Tapping;
 import com.eergun.mobilet.entity.card.Card;
 import com.eergun.mobilet.entity.enums.Direction;
 import com.eergun.mobilet.exception.ErrorType;
@@ -26,11 +25,19 @@ public class TappingService {
 	private final CardService cardService;
 	private final VehicleService vehicleService;
 	private final StationService stationService;
-	
+	private final VehicleLineService vehicleLineService;
+
 	public VwTapping tapTheCard(TapRequestDto dto) {
 		if(!vehicleService.existsByVehicalSerialNo(dto.vehicleSerialNo())) {
 			throw new MobiletException(ErrorType.VEHICLE_NOT_FOUND);
 		}
+
+		Long vehicleLineId = vehicleService.getVehicleLineIdByVehicleSerialNo(dto.vehicleSerialNo());
+		List<Long> vehicleLineStationList = vehicleLineService.findStationIdByVehicleLineId(vehicleLineId);
+		if(!isVehicleStationCorrect(dto.stationId(),vehicleLineStationList)){
+			throw new MobiletException(ErrorType.STATION_CONFLICT);
+		}
+
 		String cardSerialNumber = dto.cardSerialNumber();
 		String vehicleSerialNo = dto.vehicleSerialNo();
 		Card card = cardService.findBySerialNumber(cardSerialNumber);
@@ -86,9 +93,14 @@ public class TappingService {
 	public List<VwDirectionAndVehicleSerialNumber> getVehicleSerialNoListByTransactionDate(String cardSerialNumber, Long transactionDate){
 		return tappingRepository.findDirectionAndVehicleSerialNoByTransactionDate(cardSerialNumber,transactionDate);
 	}
-	
-	public boolean isVehicleStationCorrect(Long stationId, List<Long>){
-	
+
+	public boolean isVehicleStationCorrect(Long stationId, List<Long> stationIdList){
+		for(Long id : stationIdList){
+			if(id.equals(stationId)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

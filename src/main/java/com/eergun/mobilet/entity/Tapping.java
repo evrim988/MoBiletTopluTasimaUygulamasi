@@ -18,6 +18,7 @@ public class Tapping extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
+	Long tappingMachinId;
 	String cardSerialNumber;
 	@Enumerated(EnumType.STRING)
 	VehicleType vehicleType;
@@ -28,5 +29,6 @@ public class Tapping extends BaseEntity{
 	Long stationId;
 	@Enumerated(EnumType.STRING)
 	Direction direction;
+
 	
 }

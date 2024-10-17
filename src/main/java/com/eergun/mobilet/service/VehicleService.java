@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 public class VehicleService {
 	private final VehicleRepository vehicleRepository;
 
+	public Long getVehicleLineIdByVehicleSerialNo(String vehicleSerialNo) {
+		return vehicleRepository.getVehicleLineId(vehicleSerialNo);
+	}
+
 	public Boolean existsByVehicalSerialNo(String vehicleSerialNo){
 		return vehicleRepository.existsByVehicleSerialNo(vehicleSerialNo);
 	}
