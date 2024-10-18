@@ -4,11 +4,16 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mobiletdb
-    username: postgres
-    password: root
+    url: ${Mobilet_Postgre_Url}
+    username: ${Mobilet_Postgre_Username}
+    password: ${Mobilet_Postgre_Password}
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+
+mobilet:
+  jwt:
+    secret-key: ${Mobilet_Jwt_SecretKey}
+    issuer: ${Mobilet_Jwt_Issuer}

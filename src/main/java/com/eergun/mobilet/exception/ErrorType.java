@@ -13,7 +13,9 @@ public enum ErrorType {
     CARD_NOT_FOUND(4002,"Kart bulunamadı.",HttpStatus.NOT_FOUND),
     VEHICLE_NOT_FOUND(4003,"Araç bulunamadı",HttpStatus.NOT_FOUND),
     USER_NOT_FOUND(4004, "Kullanıcı bulunamadı", HttpStatus.NOT_FOUND),
-    STATION_CONFLICT(4005,"Girilen durak ile araç hattı bağdaşmamaktadır.",HttpStatus.CONFLICT);
+    STATION_CONFLICT(4005,"Girilen durak ile araç hattı bağdaşmamaktadır.",HttpStatus.CONFLICT),
+    INVALID_EMAIL_OR_PASSWORD(4006, "Email ya da şifre hatalıdır.", HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(4007, "Geçersiz token bilgisi", HttpStatus.BAD_REQUEST);
     
     private int code;
     private String message;
